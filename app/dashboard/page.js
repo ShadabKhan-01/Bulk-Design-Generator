@@ -1,13 +1,39 @@
 "use client"
 
-import { useState } from "react";
-import { Upload, FileText, Download } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+// import { fabric } from "fabric";
+import { Upload, FileText, Download, PencilRuler } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import DesignTools from "@/components/DesignTools";
+import LayersCustomization from "@/components/LayersCustomization";
 
 export default function BulkDesignApp() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
+  const canvasRef = useRef(null);
+  const [isExpanded, setIsExpanded] = useState(false); // Controls the panel sliding
+  const [showDesignTools, setShowDesignTools] = useState(false);
+
+  // useEffect(() => {
+  //   const canvas = new fabric.Canvas(canvasRef.current, {
+  //     backgroundColor: "#ffffff",
+  //   });
+
+  //   const text = new fabric.Text("Your Design Here", {
+  //     left: 50,
+  //     top: 50,
+  //     fontSize: 20,
+  //     fill: "black",
+  //   });
+
+  //   canvas.add(text);
+
+  //   return () => {
+  //     canvas.dispose();
+  //   };
+  // }, []);
+
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -16,15 +42,20 @@ export default function BulkDesignApp() {
 
   return (
     <div className={` ${darkMode ? "bg-gray-900 text-white" : "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-        }`}>
+      }`}>
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <div className={`flex h-screen `}>
         {/* Sidebar */}
-        <aside className="w-1/4 bg-white/10 backdrop-blur-md p-4 shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Design Options</h2>
-          <button className="w-full mb-2 bg-white text-gray-900 hover:bg-gray-200 border rounded-lg py-2 px-4">
-            Create New Design
-          </button>
+        <aside
+          className={`w-1/4 bg-white/10 backdrop-blur-md p-4 shadow-md transition-transform duration-300 
+          ${showDesignTools ? "-translate-x-full opacity-0 pointer-events-none" : "translate-x-0 opacity-100"}`}
+        >
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Design Options</h2>
+            <button onClick={() => setShowDesignTools(true)} className="w-full mb-2 bg-white text-gray-900 hover:bg-gray-200 border rounded-lg py-2 px-4">
+              Create New Design
+            </button>
+          </div>
           <label className="w-full flex items-center justify-center px-4 py-2 bg-white text-gray-900 border rounded-lg shadow-sm cursor-pointer">
             <Upload className="mr-2" /> Upload Template
             <input type="file" className="hidden" onChange={handleFileUpload} />
@@ -33,15 +64,25 @@ export default function BulkDesignApp() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col p-6">
-          <h1 className="text-4xl font-bold mb-4">Bulk Design Generator</h1>
+        <main className="flex flex-col p-6 transition-all duration-500 w-1/2">
+          <div className="flex justify-evenly">
+            <h1 className="text-4xl font-bold mb-4 inline-block">Bulk Design Generator</h1>
+            <button
+              onClick={() => setShowDesignTools(false)}
+              className={`px-4 bg-white text-gray-900 border rounded-lg shadow-md my-1
+              ${!showDesignTools && "hidden"}`}
+            >Back to Options</button>
+          </div>
           <div className="h-96 flex items-center justify-center bg-white/10 shadow-lg p-6 rounded-lg">
-            <p className="text-gray-200">Canvas Area (Fabric.js will be integrated here)</p>
+            <canvas ref={canvasRef} className="w-full h-full" />
           </div>
         </main>
 
         {/* Data Upload & Export Section */}
-        <aside className="w-1/4 bg-white/10 backdrop-blur-md p-4 shadow-md">
+        <aside
+          className={`w-1/4 bg-white/10 backdrop-blur-md p-4 shadow-md transition-transform duration-300 relative top-0 right-0 h-full 
+          ${showDesignTools ? "translate-x-full opacity-0 hidden pointer-events-none" : "translate-x-0 opacity-100 block"}`}
+        >
           <h2 className="text-xl font-semibold mb-4">Data & Export</h2>
           <label className="w-full flex items-center justify-center px-4 py-2 bg-white text-gray-900 border rounded-lg shadow-sm cursor-pointer">
             <FileText className="mr-2" /> Upload CSV
@@ -51,6 +92,11 @@ export default function BulkDesignApp() {
             <Download className="mr-2" /> Export Designs
           </button>
         </aside>
+
+        {/* New Design Tool Panels (Visible when designing) */}
+        <DesignTools showDesignTools={showDesignTools}/>
+
+       <LayersCustomization showDesignTools={showDesignTools}/>
       </div>
       <Footer darkMode={darkMode} />
     </div>
