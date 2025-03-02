@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 // import { fabric } from "fabric";
+import { Canvas } from "fabric";
 import { Upload, FileText, Download, PencilRuler } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -11,14 +12,27 @@ import LayersCustomization from "@/components/LayersCustomization";
 export default function BulkDesignApp() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
-  const canvasRef = useRef(null);
-  const [isExpanded, setIsExpanded] = useState(false); // Controls the panel sliding
   const [showDesignTools, setShowDesignTools] = useState(false);
+  const [canvas, setcanvas] = useState(null)
+  const canvasRef = useRef(null);
 
-  // useEffect(() => {
-  //   const canvas = new fabric.Canvas(canvasRef.current, {
-  //     backgroundColor: "#ffffff",
-  //   });
+  useEffect(() => {
+    if (canvasRef.current) {
+        const initCanvas = new Canvas(canvasRef.current, {
+          // backgroundColor: "#ffffff",
+          width: 530,
+          height: 330,
+        });
+        initCanvas.backgroundColor = "#fff"
+        initCanvas.renderAll();
+
+        setcanvas(initCanvas);
+        
+          return () => {
+            canvas.dispose();
+          };
+    }
+
 
   //   const text = new fabric.Text("Your Design Here", {
   //     left: 50,
@@ -29,10 +43,7 @@ export default function BulkDesignApp() {
 
   //   canvas.add(text);
 
-  //   return () => {
-  //     canvas.dispose();
-  //   };
-  // }, []);
+  }, []);
 
 
   const handleFileUpload = (e) => {
@@ -94,7 +105,7 @@ export default function BulkDesignApp() {
         </aside>
 
         {/* New Design Tool Panels (Visible when designing) */}
-        <DesignTools showDesignTools={showDesignTools}/>
+        <DesignTools showDesignTools={showDesignTools} canvas={canvas}/>
 
        <LayersCustomization showDesignTools={showDesignTools}/>
       </div>

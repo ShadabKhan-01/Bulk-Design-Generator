@@ -1,7 +1,43 @@
 import React from 'react'
-import { PencilRuler } from 'lucide-react'
+import {  CircleDashed, PencilRuler, TriangleDashed } from 'lucide-react'
+import { Rect, Circle, Triangle  } from 'fabric'
+import { RectangleHorizontalIcon } from 'lucide-react'
 
-const DesignTools = ({showDesignTools}) => {
+const DesignTools = ({showDesignTools,canvas}) => {
+
+  const addRect = ()=>{
+    if (canvas){
+      const shape = new Rect({
+        top :100,
+        left :50,
+        width :100,
+        height :60,
+        fill :"#D84D42"
+      })
+      canvas.add(shape);
+    }
+  }
+  const addCircle = ()=>{
+    if (canvas){
+      const shape = new Circle({
+        top :100,
+        left :50,
+        radius: 50,
+        fill :"#D84D42"
+      })
+      canvas.add(shape);
+    }
+  }
+  const addTriangle = ()=>{
+    if (canvas){
+      const shape = new Triangle({
+        top :100,
+        left :50,
+        fill :"#D84D42"
+      })
+      canvas.add(shape);
+    }
+  }
   return (
     <div>
       <aside
@@ -12,6 +48,15 @@ const DesignTools = ({showDesignTools}) => {
           <div className="mt-4">
             <PencilRuler className="w-12 h-12 mx-auto text-white" />
             <p className="text-center mt-2">Editing Tools</p>
+            <button className='hover:bg-black p-2 rounded' onClick={addRect}>
+            <RectangleHorizontalIcon/>
+            </button>
+            <button className='hover:bg-black p-2 rounded' onClick={addCircle}>
+            <CircleDashed/>
+            </button>
+            <button className='hover:bg-black p-2 rounded' onClick={addTriangle}>
+            <TriangleDashed/>
+            </button>
           </div>
         </aside>
     </div>
