@@ -1,6 +1,6 @@
 import React from 'react'
-import {  CircleDashed, PencilRuler, TriangleDashed } from 'lucide-react'
-import { Rect, Circle, Triangle  } from 'fabric'
+import {  CircleDashed, Minus, PencilRuler, TextCursorInput, TriangleDashed } from 'lucide-react'
+import { Rect, Circle, Triangle, Textbox, Line  } from 'fabric'
 import { RectangleHorizontalIcon } from 'lucide-react'
 
 const DesignTools = ({showDesignTools,canvas}) => {
@@ -38,6 +38,25 @@ const DesignTools = ({showDesignTools,canvas}) => {
       canvas.add(shape);
     }
   }
+  const addText = ()=>{
+    if (canvas){
+      const shape = new Textbox("Hello World",{
+        top :100,
+        left :50,
+      })
+      canvas.add(shape);
+    }
+  }
+  const addLine = ()=>{
+    if (canvas){
+      const shape = new Line([50, 50, 200, 50],{
+        stroke: "black",
+        strokeWidth: 5,
+      })
+      canvas.add(shape);
+    }
+  }
+
   return (
     <div>
       <aside
@@ -56,6 +75,12 @@ const DesignTools = ({showDesignTools,canvas}) => {
             </button>
             <button className='hover:bg-black p-2 rounded' onClick={addTriangle}>
             <TriangleDashed/>
+            </button>
+            <button className='hover:bg-black p-2 rounded' onClick={addText}>
+            <TextCursorInput/>
+            </button>
+            <button className='hover:bg-black p-2 rounded' onClick={addLine}>
+            <Minus/>
             </button>
           </div>
         </aside>

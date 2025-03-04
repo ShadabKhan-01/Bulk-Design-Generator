@@ -14,34 +14,23 @@ export default function BulkDesignApp() {
   const [darkMode, setDarkMode] = useState(false);
   const [showDesignTools, setShowDesignTools] = useState(false);
   const [canvas, setcanvas] = useState(null)
-  const canvasRef = useRef(null);
+  const canvasRef = useRef();
 
   useEffect(() => {
     if (canvasRef.current) {
-        const initCanvas = new Canvas(canvasRef.current, {
-          // backgroundColor: "#ffffff",
-          width: 530,
-          height: 330,
-        });
-        initCanvas.backgroundColor = "#fff"
-        initCanvas.renderAll();
+      const initCanvas = new Canvas(canvasRef.current, {
+        width: 530,
+        height: 330,
+      });
+      initCanvas.backgroundColor = "#fff"
+      initCanvas.renderAll();
 
-        setcanvas(initCanvas);
-        
-          return () => {
-            canvas.dispose();
-          };
+      setcanvas(initCanvas);
+
+      return () => {
+        initCanvas.dispose();
+      };
     }
-
-
-  //   const text = new fabric.Text("Your Design Here", {
-  //     left: 50,
-  //     top: 50,
-  //     fontSize: 20,
-  //     fill: "black",
-  //   });
-
-  //   canvas.add(text);
 
   }, []);
 
@@ -105,9 +94,9 @@ export default function BulkDesignApp() {
         </aside>
 
         {/* New Design Tool Panels (Visible when designing) */}
-        <DesignTools showDesignTools={showDesignTools} canvas={canvas}/>
+        <DesignTools showDesignTools={showDesignTools} canvas={canvas} />
 
-       <LayersCustomization showDesignTools={showDesignTools}/>
+        <LayersCustomization showDesignTools={showDesignTools} canvas={canvas}/>
       </div>
       <Footer darkMode={darkMode} />
     </div>
