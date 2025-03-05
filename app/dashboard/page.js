@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react";
-// import { fabric } from "fabric";
-import { Canvas } from "fabric";
+// import  fabric from "fabric";
+import { Canvas, FabricImage } from "fabric";
 import { Upload, FileText, Download, PencilRuler } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -11,6 +11,7 @@ import LayersCustomization from "@/components/LayersCustomization";
 
 export default function BulkDesignApp() {
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [imageSrc, setImageSrc] = useState("");
   const [darkMode, setDarkMode] = useState(false);
   const [showDesignTools, setShowDesignTools] = useState(false);
   const [canvas, setcanvas] = useState(null)
@@ -37,8 +38,32 @@ export default function BulkDesignApp() {
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    if (file) setUploadedFile(file.name);
+    if (file) {
+      setUploadedFile(file.name);
+      const url = URL.createObjectURL(file);
+      setImageSrc(url);
+
+      const imageElement = document.createElement("img")
+      imageElement.src = url
+      imageElement.onload = () => {
+
+        const scale = Math.min(
+          canvas.width/imageElement.width,
+          canvas.height/imageElement.height
+        )
+
+        const image = new FabricImage(imageElement, {
+          left: 0,
+          top: 0,
+          scaleX:scale,
+          scaleY:scale
+        });
+        canvas.add(image);
+        canvas.renderAll();
+      }
+    };
   };
+
 
   return (
     <div className={` ${darkMode ? "bg-gray-900 text-white" : "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
@@ -58,7 +83,7 @@ export default function BulkDesignApp() {
           </div>
           <label className="w-full flex items-center justify-center px-4 py-2 bg-white text-gray-900 border rounded-lg shadow-sm cursor-pointer">
             <Upload className="mr-2" /> Upload Template
-            <input type="file" className="hidden" onChange={handleFileUpload} />
+            <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
           </label>
           {uploadedFile && <p className="text-sm mt-2">Uploaded: {uploadedFile}</p>}
         </aside>
@@ -96,7 +121,7 @@ export default function BulkDesignApp() {
         {/* New Design Tool Panels (Visible when designing) */}
         <DesignTools showDesignTools={showDesignTools} canvas={canvas} />
 
-        <LayersCustomization showDesignTools={showDesignTools} canvas={canvas}/>
+        <LayersCustomization showDesignTools={showDesignTools} canvas={canvas} />
       </div>
       <Footer darkMode={darkMode} />
     </div>

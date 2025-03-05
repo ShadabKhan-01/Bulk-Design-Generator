@@ -41,17 +41,17 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
 
     setselectedObject(object);
 
+    setcolor(object.fill);
+
     if (object.type == "rect") {
       setwidth(Math.round(object.width * object.scaleX))
       setheight(Math.round(object.height * object.scaleY))
       setradius("");
-      setcolor(object.fill);
     }
     else if (object.type == "circle") {
       setwidth("")
       setheight("")
       setradius(Math.round(object.radius * 2 * object.scaleX));
-      setcolor(object.fill);
     }
   };
 
