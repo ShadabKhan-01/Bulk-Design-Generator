@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Import, PencilRuler } from 'lucide-react'
-// import { Input } from 'postcss';
-// import { Input } from 'blocksin-system'
-// import dynamic from "next/dynamic";
-// const Input = dynamic(() => import("blocksin-system").then((mod) => mod.Input), { ssr: false });
-
-
+import CanvasDimensions from './CanvasDimensions';
 
 const LayersCustomization = ({ showDesignTools, canvas }) => {
 
@@ -62,39 +57,39 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
     setradius("");
   }
 
-  const handleWidthChange = (e) => { 
-    const value = e.target.value.replace(/,/g,"");
-    const intValue = parseInt(value,10);
+  const handleWidthChange = (e) => {
+    const value = e.target.value.replace(/,/g, "");
+    const intValue = parseInt(value, 10);
     setwidth(intValue)
-    if(selectedObject && selectedObject.type == "rect" && intValue >= 0){
-    selectedObject.set({width: intValue/selectedObject.scaleX});
-    canvas.renderAll();
+    if (selectedObject && selectedObject.type == "rect" && intValue >= 0) {
+      selectedObject.set({ width: intValue / selectedObject.scaleX });
+      canvas.renderAll();
     }
   };
   const handleHeightChange = (e) => {
-    const value = e.target.value.replace(/,/g,"");
-    const intValue = parseInt(value,10);
+    const value = e.target.value.replace(/,/g, "");
+    const intValue = parseInt(value, 10);
     setheight(intValue)
-    if(selectedObject && selectedObject.type == "rect" && intValue >= 0){
-    selectedObject.set({height: intValue/selectedObject.scaleY});
-    canvas.renderAll();
-    }
-   }
-  const handleColorChange = (e) => { 
-    const value = e.target.value;
-    setcolor(value);
-    if(selectedObject){
-      selectedObject.set({fill: value});
+    if (selectedObject && selectedObject.type == "rect" && intValue >= 0) {
+      selectedObject.set({ height: intValue / selectedObject.scaleY });
       canvas.renderAll();
     }
   }
-  const handleRadiusChange = (e) => { 
-    const value = e.target.value.replace(/,/g,"");
-    const intValue = parseInt(value,10);
+  const handleColorChange = (e) => {
+    const value = e.target.value;
+    setcolor(value);
+    if (selectedObject) {
+      selectedObject.set({ fill: value });
+      canvas.renderAll();
+    }
+  }
+  const handleRadiusChange = (e) => {
+    const value = e.target.value.replace(/,/g, "");
+    const intValue = parseInt(value, 10);
     setradius(intValue)
-    if(selectedObject && selectedObject.type == "circle" && intValue >= 0){
-    selectedObject.set({radius: intValue/2/selectedObject.scaleX});
-    canvas.renderAll();
+    if (selectedObject && selectedObject.type == "circle" && intValue >= 0) {
+      selectedObject.set({ radius: intValue / 2 / selectedObject.scaleX });
+      canvas.renderAll();
     }
   }
 
@@ -109,18 +104,18 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
           <PencilRuler className="w-12 h-12 mx-auto text-white" />
           <p className="text-center mt-2">Layer Options</p>
           <div className='Settings'>
-          {selectedObject && (
+            {selectedObject && (
               <>
-            <div>
-              <label className="block text-white mb-1">Color</label>
-              <input
-                type='color'
-                value={color}
-                onChange={(e)=>handleColorChange(e)}
-                className="w-full px-2 border border-gray-300 rounded-md bg-gray-900 text-white"
-                />
-            </div>
-                </>)}
+                <div>
+                  <label className="block text-white mb-1">Color</label>
+                  <input
+                    type='color'
+                    value={color}
+                    onChange={(e) => handleColorChange(e)}
+                    className="w-full px-2 border border-gray-300 rounded-md bg-gray-900 text-white"
+                  />
+                </div>
+              </>)}
             {selectedObject && selectedObject.type == "rect" && (
               <>
                 <div>
@@ -128,7 +123,7 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
                   <input
                     type="number"
                     value={width}
-                    onChange={(e)=>handleWidthChange(e)}
+                    onChange={(e) => handleWidthChange(e)}
                     className="w-full p-2 border border-gray-300 rounded-md bg-gray-900 text-white"
                   />
                 </div>
@@ -137,7 +132,7 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
                   <input
                     type="number"
                     value={height}
-                    onChange={(e)=>handleHeightChange(e)}
+                    onChange={(e) => handleHeightChange(e)}
                     className="w-full p-2 border border-gray-300 rounded-md bg-gray-900 text-white"
                   />
                 </div>
@@ -151,14 +146,14 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
                   <input
                     type="number"
                     value={radius}
-                    onChange={(e)=>handleRadiusChange(e)}
+                    onChange={(e) => handleRadiusChange(e)}
                     className="w-full p-2 border border-gray-300 rounded-md bg-gray-900 text-white"
                   />
                 </div>
               </>
             )
             }
-
+            <CanvasDimensions canvas={canvas} />
           </div>
         </div>
       </aside>

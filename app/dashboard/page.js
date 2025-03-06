@@ -78,7 +78,7 @@ export default function BulkDesignApp() {
           <div>
             <h2 className="text-xl font-semibold mb-4">Design Options</h2>
             <button onClick={() => setShowDesignTools(true)} className="w-full mb-2 bg-white text-gray-900 hover:bg-gray-200 border rounded-lg py-2 px-4">
-              Create New Design
+              Edit Design
             </button>
           </div>
           <label className="w-full flex items-center justify-center px-4 py-2 bg-white text-gray-900 border rounded-lg shadow-sm cursor-pointer">
