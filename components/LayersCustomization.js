@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Import, PencilRuler } from 'lucide-react'
-import CanvasDimensions from './CanvasDimensions';
+import { PencilRuler } from 'lucide-react'
+import CanvasDimensions from './CanvasDimensions'
+import SnippingHelper from "@/components/SnappingHelper";import DeleteObj from './DeleteObj';
+
 
 const LayersCustomization = ({ showDesignTools, canvas }) => {
 
@@ -96,7 +98,7 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
   return (
     <div>
       <aside
-        className={`w-1/4 bg-black/20 backdrop-blur-lg p-4 shadow-lg absolute top-20 right-0 h-full transition-transform duration-300
+        className={`w-1/4 overflow-y-scroll bg-black/20 backdrop-blur-lg p-4 shadow-lg absolute top-20 right-0 h-full transition-transform duration-300
           ${showDesignTools ? "translate-x-0 opacity-100 block" : "translate-x-full opacity-0 pointer-events-none hidden"}`}
       >
         <h2 className="text-xl font-semibold mb-4">Layers & Customization</h2>
@@ -106,6 +108,8 @@ const LayersCustomization = ({ showDesignTools, canvas }) => {
           <div className='Settings'>
             {selectedObject && (
               <>
+              <DeleteObj canvas={canvas}/>
+              <SnippingHelper canvas={canvas}/>
                 <div>
                   <label className="block text-white mb-1">Color</label>
                   <input

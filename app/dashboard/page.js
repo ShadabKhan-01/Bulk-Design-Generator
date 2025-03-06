@@ -1,9 +1,8 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react";
-// import  fabric from "fabric";
 import { Canvas, FabricImage } from "fabric";
-import { Upload, FileText, Download, PencilRuler } from "lucide-react";
+import { Upload, FileText, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DesignTools from "@/components/DesignTools";
