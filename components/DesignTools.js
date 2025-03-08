@@ -1,6 +1,7 @@
 import React from 'react'
 import { PencilRuler} from 'lucide-react'
 import { CircleButton, LineButton, RectangleButton, TextButton, TriangleButton } from './Shapes'
+import LayersPanel from './LayersPanel'
 
 const DesignTools = ({showDesignTools,canvas}) => {
 
@@ -19,6 +20,9 @@ const DesignTools = ({showDesignTools,canvas}) => {
             <TriangleButton canvas={canvas}/>
             <TextButton canvas={canvas}/>
            <LineButton canvas={canvas}/>
+          </div>
+          <div>
+            <LayersPanel canvas={canvas}/>
           </div>
         </aside>
     </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { PencilRuler } from 'lucide-react'
 import CanvasDimensions from './CanvasDimensions'
-import SnippingHelper from "@/components/SnappingHelper";import DeleteObj from './DeleteObj';
+import SnippingHelper from "@/components/SnappingHelper";
+import DeleteObj from './DeleteObj';
 
 
 const LayersCustomization = ({ showDesignTools, canvas }) => {
